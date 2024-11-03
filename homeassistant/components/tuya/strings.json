@@ -147,7 +147,7 @@
         "name": "Far detection"
       },
       "target_dis_closest": {
-        "name": "Clostest target distance"
+        "name": "Closest target distance"
       },
       "water_level": {
         "name": "Water level"
@@ -516,6 +516,9 @@
       },
       "methane": {
         "name": "[%key:component::tuya::entity::binary_sensor::methane::name%]"
+      },
+      "presence": {
+        "name": "Presence"
       },
       "total_energy": {
         "name": "Total energy"

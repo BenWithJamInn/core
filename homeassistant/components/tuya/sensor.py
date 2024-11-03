@@ -43,6 +43,7 @@ class TuyaSensorEntityDescription(SensorEntityDescription):
     """Describes Tuya sensor entity."""
 
     subkey: str | None = None
+    type_data_override: IntegerTypeData | EnumTypeData | None = None
 
 
 # Commonly used battery sensors, that are re-used in the sensors down below.
@@ -362,6 +363,29 @@ SENSORS: dict[str, tuple[TuyaSensorEntityDescription, ...]] = {
             state_class=SensorStateClass.MEASUREMENT,
         ),
         *BATTERY_SENSORS,
+    ),
+    # Human Presence Sensor
+    # Note: Undocumented
+    "hps": (
+        # Type data is overwritten because the enum value "move" has been omitted from the device specification API on some devices
+        # Current known devices to utilise the "move" value are the XX-M100-W devices
+        TuyaSensorEntityDescription(
+            key=DPCode.PRESENCE_STATE,
+            translation_key="presence",
+            device_class=SensorDeviceClass.ENUM,
+            options=["none", "presence", "move"],
+            native_unit_of_measurement="",
+            type_data_override=EnumTypeData(
+                dpcode=DPCode.PRESENCE_STATE,
+                range=["none", "presence", "move"],
+            ),
+        ),
+        TuyaSensorEntityDescription(
+            key=DPCode.ILLUMINANCE,
+            translation_key="luminosity",
+            state_class=SensorStateClass.MEASUREMENT,
+            device_class=SensorDeviceClass.ILLUMINANCE,
+        ),
     ),
     # Switch
     # https://developer.tuya.com/en/docs/iot/s?id=K9gf7o5prgf7s
@@ -1230,7 +1254,13 @@ class TuyaSensorEntity(TuyaEntity, SensorEntity):
             f"{super().unique_id}{description.key}{description.subkey or ''}"
         )
 
-        if int_type := self.find_dpcode(description.key, dptype=DPType.INTEGER):
+        if description.type_data_override is not None:
+            self._type_data = description.type_data_override
+            if isinstance(description.type_data_override, IntegerTypeData):
+                self._type = DPType.INTEGER
+            elif isinstance(description.type_data_override, EnumTypeData):
+                self._type = DPType.ENUM
+        elif int_type := self.find_dpcode(description.key, dptype=DPType.INTEGER):
             self._type_data = int_type
             self._type = DPType.INTEGER
             if description.native_unit_of_measurement is None:
