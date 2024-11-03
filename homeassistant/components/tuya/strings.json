@@ -146,9 +146,6 @@
       "far_detection": {
         "name": "Far detection"
       },
-      "target_dis_closest": {
-        "name": "Closest target distance"
-      },
       "water_level": {
         "name": "Water level"
       },
@@ -498,6 +495,9 @@
       },
       "luminosity": {
         "name": "Luminosity"
+      },
+      "target_dis_closest": {
+        "name": "Closest target distance"
       },
       "smoke_amount": {
         "name": "Smoke amount"
