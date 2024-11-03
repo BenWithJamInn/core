@@ -146,9 +146,6 @@
       "far_detection": {
         "name": "Far detection"
       },
-      "target_dis_closest": {
-        "name": "Clostest target distance"
-      },
       "water_level": {
         "name": "Water level"
       },
@@ -499,6 +496,9 @@
       "luminosity": {
         "name": "Luminosity"
       },
+      "target_dis_closest": {
+        "name": "Closest target distance"
+      },
       "smoke_amount": {
         "name": "Smoke amount"
       },
@@ -516,6 +516,9 @@
       },
       "methane": {
         "name": "[%key:component::tuya::entity::binary_sensor::methane::name%]"
+      },
+      "presence": {
+        "name": "Presence"
       },
       "total_energy": {
         "name": "Total energy"

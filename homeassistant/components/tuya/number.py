@@ -96,11 +96,6 @@ NUMBERS: dict[str, tuple[NumberEntityDescription, ...]] = {
             device_class=NumberDeviceClass.DISTANCE,
             entity_category=EntityCategory.CONFIG,
         ),
-        NumberEntityDescription(
-            key=DPCode.TARGET_DIS_CLOSEST,
-            translation_key="target_dis_closest",
-            device_class=NumberDeviceClass.DISTANCE,
-        ),
     ),
     # Coffee maker
     # https://developer.tuya.com/en/docs/iot/categorykfj?id=Kaiuz2p12pc7f
